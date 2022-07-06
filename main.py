@@ -14,17 +14,19 @@ class MainWindow(QMainWindow):
 		self.initUI()
 
 	def initUI(self):
-		#self.lw = ListWidget()
-		self.addbtn = AddingTask()
+		self.lw = ListWidget()
+		#self.addbtn = AddingTask()
 
 		box = QHBoxLayout()
-		#box.addWidget(self.lw)
-		box.addWidget(self.addbtn)
+		box.addWidget(self.lw)
+		#box.addWidget(self.addbtn)
 
 		wdg = QWidget()
 		wdg.setLayout(box)
 
 		self.setCentralWidget(wdg)
+
+		pass
 
 		self.setWindowTitle("Pytask")
 		self.setGeometry(0, 0, 1100, 700)
@@ -33,7 +35,7 @@ class MainWindow(QMainWindow):
 		#Different interfaces
 
 	
-class AddingTask(QWidget):
+class AddingTask(QFrame):
 	def __init_(self):
 		super().__init__()
 		self.initUI()	
@@ -43,7 +45,9 @@ class AddingTask(QWidget):
 		DescriptionValue = self.task_description.text()
 
 		with open("tasks.txt", "a") as file_with_tasks:
-			file_with_tasks.write(TitleValue + " " + DescriptionValue + "\n")
+			#file_with_tasks.write(TitleValue + " " + DescriptionValue + "\n")
+			file_with_tasks.write(TitleValue + "\n")
+			file_with_tasks.write(DescriptionValue + "\n")
 			file_with_tasks.close()
 
 		QMessageBox.question(self, 'Message', "Task saved!", QMessageBox.Ok, QMessageBox.Ok)
@@ -72,20 +76,27 @@ class AddingTask(QWidget):
 		self.task_description.resize(280, 40) 
 
 class ListWidget(QListWidget):
-	LOCAL_STORAGE = [] #At first saving to local storage and than dispaly in widget
+	LOCAL_STORAGE = {} #At first saving to local storage and than dispaly in widget
 
 	def __init__(self):
 		super().__init__()
 		self.fillLocalStorage()
-		self.addItems(self.LOCAL_STORAGE)
+		#self.addItems(self.LOCAL_STORAGE)
+		self.addItems([self.LOCAL_STORAGE[task] for task in self.LOCAL_STORAGE])
 		self.initUI()
 
 	def fillLocalStorage(self):
 		with open("tasks.txt", "r") as file_with_tasks:
 			counter = 0 
+			title_save = ""
 			try:
 				for line in file_with_tasks:
-					self.LOCAL_STORAGE.append(line) 
+					line = line[0:-1]
+					if counter % 2 == 0:
+						title_save = line
+					else:
+						self.LOCAL_STORAGE[title_save] = line
+					counter += 1
 			except:
 				pass
 
