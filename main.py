@@ -1,11 +1,9 @@
 #!/Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10
 
 #Features:
-#Night and light themes
+#Dark and light themes
 #To be continued
 
-#from PyQt5.QtWidgets import (QApplication, QWidget, QMainWindow, QPushButton, QLineEdit,
-#			QMessageBox, QListWidget, QGridLayout, QSplitter, QGridLayout)
 from PyQt5.QtWidgets import * 
 from PyQt5.QtCore import QSize
 import sys
@@ -16,19 +14,17 @@ class MainWindow(QMainWindow):
 		self.initUI()
 
 	def initUI(self):
-		self.lw = ListWidget()
+		#self.lw = ListWidget()
+		self.addbtn = AddingTask()
+
 		box = QHBoxLayout()
-		box.addWidget(self.lw)
+		#box.addWidget(self.lw)
+		box.addWidget(self.addbtn)
 
 		wdg = QWidget()
 		wdg.setLayout(box)
 
 		self.setCentralWidget(wdg)
-		#self.lw = ListWidget() #3 lines below - adding listwidget(list with elements) on the main window
-		#self.setCentralWidget(self.lw)
-
-		#self.addbtn = AddingTask()
-		#self.setCentralWidget(self.addbtn)
 
 		self.setWindowTitle("Pytask")
 		self.setGeometry(0, 0, 1100, 700)
@@ -39,6 +35,7 @@ class MainWindow(QMainWindow):
 	
 class AddingTask(QWidget):
 	def __init_(self):
+		super().__init__()
 		self.initUI()	
 
 	def button_addtask_clicked(self):
