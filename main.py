@@ -15,18 +15,16 @@ class MainWindow(QMainWindow):
 
 	def initUI(self):
 		self.lw = ListWidget()
-		#self.addbtn = AddingTask()
+		self.addbtn = Button() #AddingTask()
 
 		box = QHBoxLayout()
 		box.addWidget(self.lw)
-		#box.addWidget(self.addbtn)
+		box.addWidget(self.addbtn)
 
 		wdg = QWidget()
 		wdg.setLayout(box)
 
 		self.setCentralWidget(wdg)
-
-		pass
 
 		self.setWindowTitle("Pytask")
 		self.setGeometry(0, 0, 1100, 700)
@@ -34,6 +32,19 @@ class MainWindow(QMainWindow):
 		#Set checking if window size less than *some_value* and if bigger *some_value* to display
 		#Different interfaces
 
+class Button(QPushButton):
+	def __init__(self):
+		super().__init__()
+		self.initUI()
+
+	def button_addtask_clicked(self):
+		print()
+	
+	def initUI(self):
+		self.button1 = QPushButton(self)
+		self.button1.setText("Add Task")
+		self.button1.clicked.connect(self.button_addtask_clicked)
+		self.button1.move(20, 140)
 	
 class AddingTask(QFrame):
 	def __init_(self):
@@ -51,6 +62,9 @@ class AddingTask(QFrame):
 			file_with_tasks.close()
 
 		QMessageBox.question(self, 'Message', "Task saved!", QMessageBox.Ok, QMessageBox.Ok)
+
+
+
 
 		#Redesigned button
 		#addtaskBtn = QMessageBox()
